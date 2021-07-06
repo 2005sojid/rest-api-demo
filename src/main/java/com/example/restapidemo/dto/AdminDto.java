@@ -8,7 +8,6 @@ import com.example.restapidemo.rest.AdminRestControllerV1;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import org.springframework.context.annotation.Bean;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
@@ -39,6 +38,11 @@ public class AdminDto {
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
 
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+    private List<FriendDto> friendTo;
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+    private List<FriendDto> myFriends;
+
     public static AdminDto fromAdmin(User user) {
         AdminDto adminDto = new AdminDto();
         adminDto.setId(user.getId());
@@ -46,6 +50,8 @@ public class AdminDto {
         adminDto.setRoles(roleAdminDtos(user.getRoles()));
         adminDto.setFirstName(user.getFirstName());
         adminDto.setLastName(user.getLastName());
+        adminDto.setFriendTo(FriendDto.getFriendsList(user.getFriends()));
+        adminDto.setMyFriends(FriendDto.getFriendsList(user.getMyFriends()));
         adminDto.setStatus(String.valueOf(user.getStatus()));
         adminDto.setCreated(user.getCreatedDate());
         adminDto.setUpdated(user.getUpdatedDate());
@@ -87,6 +93,20 @@ public class AdminDto {
             user.setLastName(adminDto.getLastName());
         }
 
+        if (adminDto.getMyFriends() == null){
+            user.setMyFriends(userFromDB.getMyFriends());
+        }
+        else {
+            user.setMyFriends(FriendDto.users(adminDto.getMyFriends()));
+        }
+
+        if (adminDto.getFriendTo() == null){
+            user.setFriends(userFromDB.getFriends());
+        }
+        else {
+            user.setFriends(FriendDto.users(adminDto.getFriendTo()));
+        }
+
         if (adminDto.getRoles() == null) {
             user.setRoles(userFromDB.getRoles());
         } else {
@@ -113,15 +133,5 @@ public class AdminDto {
         return roleList;
     }
 
-    public static AdminDto checkFields(AdminDto adminDto) {
-        AdminDto response = new AdminDto();
-        User user = userRepo.findById(adminDto.getId()).orElseThrow(() -> new UsernameNotFoundException("User not found"));
-        if (adminDto.getPassword() == null) {
-            response.setPassword(user.getPassword());
-        }
-        if (adminDto.getRoles() == null) {
-            response.setRoles(roleAdminDtos(user.getRoles()));
-        }
-        return response;
-    }
+
 }

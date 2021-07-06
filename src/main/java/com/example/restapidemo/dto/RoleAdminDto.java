@@ -32,4 +32,5 @@ public class RoleAdminDto {
         role.setStatus(roleAdminDto.getStatus());
         return role;
     }
+
 }

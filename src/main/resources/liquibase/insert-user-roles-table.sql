@@ -1,0 +1,1 @@
+insert into user_roles values (1, 1), (1, 2)

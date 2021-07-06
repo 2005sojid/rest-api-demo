@@ -1,0 +1,1 @@
+insert into users (username, password, first_name, last_name) values ('admin', '$2y$12$Y3s4A3Y0qy.GOTeT7vmgvuUBipnRvl.sjuRUufnNFKkCwaSltuLjO', 'Sojid', 'Bakhronov')

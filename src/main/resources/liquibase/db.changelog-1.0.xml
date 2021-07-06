@@ -1,0 +1,31 @@
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                        https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+
+    <changeSet id="1.0.0" author="eugene.suleimanov">
+        <sqlFile path="create-users-table.sql" relativeToChangelogFile="true" encoding="UTF-8"/>
+    </changeSet>
+
+    <changeSet id="1.0.1" author="eugene.suleimanov">
+        <sqlFile path="create-roles-table.sql" relativeToChangelogFile="true" encoding="UTF-8"/>
+    </changeSet>
+
+    <changeSet id="1.0.2" author="eugene.suleimanov">
+        <sqlFile path="create-user-roles-table.sql" relativeToChangelogFile="true"/>
+    </changeSet>
+
+
+    <changeSet id="1.0.3" author="eugene.suleimanov">
+        <sqlFile path="insert-users-table.sql" relativeToChangelogFile="true"/>
+    </changeSet>
+
+    <changeSet id="1.0.4" author="eugene.suleimanov">
+        <sqlFile path="insert-roles-table.sql" relativeToChangelogFile="true"/>
+    </changeSet>
+
+    <changeSet id="1.0.5" author="eugene.suleimanov">
+        <sqlFile path="insert-user-roles-table.sql" relativeToChangelogFile="true"/>
+    </changeSet>
+</databaseChangeLog>
